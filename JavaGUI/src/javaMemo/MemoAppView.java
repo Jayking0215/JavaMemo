@@ -64,9 +64,16 @@ public class MemoAppView extends JFrame{
 		tfDate.setText(date);
 		tfDate.setFont(new Font("Serif",Font.BOLD,12));
 		tfDate.setHorizontalAlignment(JTextField.CENTER);
+		
 		tfNo.setEditable(false);
 		
+		pS.add(btDel=new JButton("글삭제"));
+		pS.add(btEdit=new JButton("글수정"));
+		pS.add(btEditEnd=new JButton("글수정처리"));
+		pS.add(btFind=new JButton("글검색"));
 		
+		//창닫기
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}//생성자
 	
 	/**핸자 os날짜를 yyyy-MM-dd 포맷의 문자열로 변환하여 반환하는 메서드*/
