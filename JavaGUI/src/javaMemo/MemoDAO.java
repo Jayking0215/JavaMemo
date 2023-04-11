@@ -12,7 +12,9 @@ public class MemoDAO {
 	private PreparedStatement ps;
 	private ResultSet rs;
 	
-	
+	/**
+	 * 한줄 메모장에 insert문을 수행하는 메서드(CRUD중 C)
+	 * */ //MemoVO 자체가 1개의 행
 	
 	public void insertMemo(MemoVO memo) {
 		
