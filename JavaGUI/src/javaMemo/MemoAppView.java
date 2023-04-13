@@ -5,6 +5,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
+import java.util.List;
 import java.awt.*;
 import java.awt.event.*;//[1]
 
@@ -23,6 +24,8 @@ public class MemoAppView extends JFrame{
 	JButton btAdd, btList, btDel, btEdit, btEditEnd, btFind;
 	JTextField tfName, tfDate, tfNo, tfMsg;
 	
+	//외부에서 핸들러 가져오기 위한 controller
+	MemoHandler handler;
 	
 	public MemoAppView() {
 		super("::MemoView::");
@@ -72,6 +75,15 @@ public class MemoAppView extends JFrame{
 		pS.add(btEditEnd=new JButton("글수정처리"));
 		pS.add(btFind=new JButton("글검색"));
 		
+		//리스너 부착
+		handler=new MemoHandler(this);
+		btAdd.addActionListener(handler);
+		btList.addActionListener(handler);
+		btDel.addActionListener(handler);
+		btEdit.addActionListener(handler);
+		btEditEnd.addActionListener(handler);
+		btFind.addActionListener(handler);
+		
 		//창닫기
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}//생성자
@@ -82,14 +94,54 @@ public class MemoAppView extends JFrame{
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");//java.text.SimpleDateFormat
 		String str=sdf.format(today);
 		return str;
-	}
+	}//-----
 	
-	
+	/** 메시지를 대화창에 보여주는 메서드
+	 * */
+	public void showMessage(String str) {
+		JOptionPane.showMessageDialog(this, str);
+	}//-----
+
+	/** 입력 필드를 모두 빈문자열로 초기화하는 메서드
+	 * */
+	public void clearInput() {
+		tfNo.setText("");
+		tfName.setText("");
+		tfMsg.setText("");
+		tfName.requestFocus();
+	}//-----
+
+	/**전체 메모 글을 TextArea에 출력해주는 메서드
+	 * */
+	public void showTextArea(List<MemoVO> arr) {
+		if(arr==null||arr.size()==0) {
+			ta.setText("데이터가 없습니다");
+		}else {
+			ta.setText("");
+			ta.append("======================================================================================================================\n");
+			ta.append("\t글번호\t 작성자\t 메모내용\t\t\t\t작성일\n");
+			ta.append("======================================================================================================================\n");
+			for(MemoVO vo:arr) {
+				ta.append("    "+vo.getNo()+"\t"+vo.getName()+"\t"+vo.getMsg()+"\t"+vo.getWdate()+"\n");
+			}//for---
+			ta.append("======================================================================================================================\n");
+		}
+	}//----
+
+	public String showInputDialog(String str) {
+		String res=JOptionPane.showInputDialog(str);
+		return null;
+	}//---
+
 	public static void main(String[] args) {//프로그램 main 시작점
 		MemoAppView mv=new MemoAppView();
 		mv.setSize(900, 600);
 		mv.setResizable(false);
 		mv.setVisible(true);
 	}
+
+
+
+	
 
 }

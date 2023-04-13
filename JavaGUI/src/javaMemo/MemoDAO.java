@@ -135,6 +135,9 @@ public class MemoDAO {
 		}
 	}//----
 
+	/**
+	 * DB관련한 자원들을 반납하는 메서드
+	 * */
 	private void close() {
 		try {
 			if(rs!=null)rs.close();
